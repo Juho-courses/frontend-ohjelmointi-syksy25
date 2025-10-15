@@ -18,6 +18,7 @@ type PeepsStore = {
   peeps: Peep[];
   deleteAll: () => void;
   addPeep: (new_peep: Peep) => void;
+  removePeep: (target: Peep) => void;
 };
 
 const peeps_og: Peep[] = [
@@ -31,6 +32,12 @@ const usePeepsStore = create<PeepsStore>((set) => ({
   deleteAll: () => set({ peeps: [] }),
   addPeep: (new_peep) =>
     set((state) => ({ peeps: [...state.peeps, new_peep] })),
+  removePeep: (target) =>
+    set((state) => ({
+      peeps: state.peeps.filter(
+        (p) => !(p.name === target.name && p.superpower === target.superpower)
+      ),
+    })),
 }));
 
 export { usePeepsStore };
